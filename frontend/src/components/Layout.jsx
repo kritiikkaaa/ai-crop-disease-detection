@@ -1,6 +1,40 @@
-import { useContext } from 'react'; 
-import { Link, NavLink } from 'react-router-dom'; 
-import { FiMoon, FiSun, FiFeather } from 'react-icons/fi'; 
-import { ThemeContext } from '../main';
-export default 
-function Layout({children}) { const {dark,setDark}=useContext(ThemeContext); return <><header className="sticky top-0 z-20 border-b border-emerald-900/10 bg-white/75 backdrop-blur dark:bg-slate-950/75 dark:border-white/10"><nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4"><Link to="/" className="flex items-center gap-2 text-lg font-bold text-forest dark:text-lime"><FiFeather/> CropVision</Link><div className="flex items-center gap-4 text-sm font-medium"><NavLink to="/" end>Home</NavLink><NavLink to="/about">About</NavLink><NavLink className="rounded-full bg-forest px-4 py-2 text-white" to="/predict">Diagnose</NavLink><button aria-label="Toggle theme" onClick={()=>setDark(!dark)}>{dark?<FiSun/>:<FiMoon/>}</button></div></nav></header><main>{children}</main><footer className="mt-16 border-t border-emerald-900/10 py-8 text-center text-sm text-slate-500">CropVision · PlantVillage-powered disease classification</footer></> }
+import { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { FiMoon, FiSun, FiFeather } from "react-icons/fi";
+import { ThemeContext } from "../main";
+export default function Layout({ children }) {
+  const { dark, setDark } = useContext(ThemeContext);
+  return (
+    <>
+      <header className="sticky top-0 z-20 border-b border-emerald-900/10 bg-white/75 backdrop-blur dark:bg-slate-950/75 dark:border-white/10">
+        <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+          <Link
+            to="/"
+            className="flex items-center gap-2 text-lg font-bold text-forest dark:text-lime"
+          >
+            <FiFeather /> CropVision
+          </Link>
+          <div className="flex items-center gap-4 text-sm font-medium">
+            <NavLink to="/" end>
+              Home
+            </NavLink>
+            <NavLink to="/about">About</NavLink>
+            <NavLink
+              className="rounded-full bg-forest px-4 py-2 text-white"
+              to="/predict"
+            >
+              Diagnose
+            </NavLink>
+            <button aria-label="Toggle theme" onClick={() => setDark(!dark)}>
+              {dark ? <FiSun /> : <FiMoon />}
+            </button>
+          </div>
+        </nav>
+      </header>
+      <main>{children}</main>
+      <footer className="mt-16 border-t border-emerald-900/10 py-8 text-center text-sm text-slate-500">
+        CropVision · PlantVillage-powered disease classification
+      </footer>
+    </>
+  );
+}

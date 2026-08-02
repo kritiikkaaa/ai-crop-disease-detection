@@ -77,7 +77,15 @@ Open the Vite URL (normally `http://localhost:5173`). The app requires the train
 Example response:
 
 ```json
-{"disease":"Tomato — Early blight","confidence":98.91,"description":"...","symptoms":[],"causes":[],"treatment":[],"prevention":[]}
+{
+  "disease": "Tomato — Early blight",
+  "confidence": 98.91,
+  "description": "...",
+  "symptoms": [],
+  "causes": [],
+  "treatment": [],
+  "prevention": []
+}
 ```
 
 ## Deployment
