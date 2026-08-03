@@ -14,8 +14,23 @@ def predict():
     if image.mimetype not in {"image/jpeg", "image/png", "image/webp"}:
         raise BadRequest("Only JPEG, PNG, and WEBP images are accepted.")
     try:
-        result = predictor.predict(image.read(), current_app.config["MODEL_PATH"], current_app.config["LABELS_PATH"])
+        result = predictor.predict(
+            image.read(),
+            current_app.config["MODEL_PATH"],
+            current_app.config["LABELS_PATH"],
+        )
     except FileNotFoundError:
-        raise ServiceUnavailable("Model artifacts are unavailable. Train the model before making predictions.")
-    info = DiseaseInfoService(current_app.config["DISEASE_INFO_PATH"]).get(result["label"])
-    return jsonify({"disease": result["disease"], "confidence": result["confidence"], "top_predictions": result["top_predictions"], **info})
+        raise ServiceUnavailable(
+            "Model artifacts are unavailable. Train the model before making predictions."
+        )
+    info = DiseaseInfoService(current_app.config["DISEASE_INFO_PATH"]).get(
+        result["label"]
+    )
+    return jsonify(
+        {
+            "disease": result["disease"],
+            "confidence": result["confidence"],
+            "top_predictions": result["top_predictions"],
+            **info,
+        }
+    )

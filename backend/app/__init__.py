@@ -1,4 +1,5 @@
 """Application factory for the crop disease detection API."""
+
 from __future__ import annotations
 
 import logging
@@ -24,10 +25,13 @@ def create_app() -> Flask:
         "http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174",
     ).split(",")
     CORS(app, resources={r"/*": {"origins": origins}})
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s"
+    )
 
     from app.routes.health import health_bp
     from app.routes.predict import predict_bp
+
     app.register_blueprint(health_bp)
     app.register_blueprint(predict_bp)
 
