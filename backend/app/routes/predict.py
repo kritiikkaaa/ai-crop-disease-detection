@@ -23,11 +23,14 @@ def predict():
         raise ServiceUnavailable(
             "Model artifacts are unavailable. Train the model before making predictions."
         )
+    except ValueError as error:
+        raise BadRequest(str(error))
     info = DiseaseInfoService(current_app.config["DISEASE_INFO_PATH"]).get(
         result["label"]
     )
     return jsonify(
         {
+            "success": True,
             "disease": result["disease"],
             "confidence": result["confidence"],
             "top_predictions": result["top_predictions"],

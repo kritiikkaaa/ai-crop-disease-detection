@@ -16,7 +16,7 @@ def create_app() -> Flask:
     root = Path(__file__).resolve().parents[1]
     app.config.from_mapping(
         MAX_CONTENT_LENGTH=int(os.getenv("MAX_CONTENT_LENGTH", 8 * 1024 * 1024)),
-        MODEL_PATH=os.getenv("MODEL_PATH", str(root / "models" / "model.keras")),
+        MODEL_PATH=os.getenv("MODEL_PATH", str(root / "models" / "crop_disease_model.keras")),
         LABELS_PATH=os.getenv("LABELS_PATH", str(root / "models" / "labels.json")),
         DISEASE_INFO_PATH=str(root / "app" / "data" / "disease_info.json"),
     )

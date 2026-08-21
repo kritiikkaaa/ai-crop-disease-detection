@@ -36,5 +36,37 @@
     "causes": [],
     "treatment": ["No treatment is required."],
     "prevention": ["Continue regular scouting and balanced irrigation."]
+  },
+  "Tomato___Late_blight": {
+    "description": "Late blight is a fast-spreading tomato disease that can damage leaves, stems, and fruit.",
+    "scientific_name": "Phytophthora infestans",
+    "symptoms": ["Water-soaked or dark brown lesions", "White growth in humid conditions"],
+    "causes": ["Phytophthora infestans", "Cool and wet weather"],
+    "treatment": ["Remove severely affected plant material", "Use locally approved management advice promptly"],
+    "prevention": ["Improve airflow", "Avoid wet foliage", "Monitor plants after wet weather"]
+  },
+  "Tomato___Septoria_leaf_spot": {
+    "description": "Septoria leaf spot is a fungal disease that commonly begins on lower tomato leaves.",
+    "scientific_name": "Septoria lycopersici",
+    "symptoms": ["Small circular spots with pale centers", "Yellowing and lower-leaf loss"],
+    "causes": ["Septoria lycopersici fungus", "Splashing water and humid conditions"],
+    "treatment": ["Remove affected leaves", "Follow locally approved fungicide guidance"],
+    "prevention": ["Mulch soil", "Sanitize tools", "Avoid overhead irrigation"]
+  },
+  "Tomato___Spider_mites Two-spotted_spider_mite": {
+    "description": "Two-spotted spider mites are sap-feeding pests that can weaken tomato leaves.",
+    "scientific_name": "Tetranychus urticae",
+    "symptoms": ["Fine pale stippling", "Webbing and bronzed leaves in severe cases"],
+    "causes": ["Two-spotted spider mite infestation", "Hot, dry conditions"],
+    "treatment": ["Inspect leaf undersides", "Use locally approved integrated pest-management measures"],
+    "prevention": ["Monitor regularly", "Avoid plant stress", "Encourage appropriate beneficial insects"]
+  },
+  "Tomato___Target_Spot": {
+    "description": "Target spot is a tomato leaf disease associated with concentric, target-like lesions.",
+    "scientific_name": "Corynespora cassiicola",
+    "symptoms": ["Brown circular lesions with concentric rings", "Leaf yellowing and defoliation"],
+    "causes": ["Corynespora cassiicola fungus", "Warm, humid conditions"],
+    "treatment": ["Remove heavily affected foliage", "Follow locally approved crop-protection guidance"],
+    "prevention": ["Improve spacing and airflow", "Avoid prolonged leaf wetness", "Sanitize crop debris"]
   }
 }

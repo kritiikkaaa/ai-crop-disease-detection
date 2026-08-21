@@ -10,3 +10,4 @@ backend/evaluation/*
 frontend/node_modules/
 frontend/dist/
 frontend/.env.local
+dataset/

@@ -45,9 +45,8 @@ class Predictor:
             raise ValueError("The uploaded file is not a readable image.")
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image = cv2.resize(image, (224, 224), interpolation=cv2.INTER_AREA)
-        # The bundled pretrained MobileNetV2 model contains its own Rescaling
-        # layer, so inference must receive RGB pixels in the 0–255 range.
-        return np.expand_dims(image.astype(np.float32), axis=0)
+        # Match the paper-aligned training preprocessing: RGB pixels in [0, 1].
+        return np.expand_dims(image.astype(np.float32) / 255.0, axis=0)
 
     def predict(self, raw: bytes, model_path: str, labels_path: str) -> dict:
         self._load(model_path, labels_path)
