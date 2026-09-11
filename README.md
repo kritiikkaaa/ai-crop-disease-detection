@@ -19,6 +19,7 @@ The pipeline uses stratified splitting with seed 42: approximately 70% training,
 ## Model and preprocessing
 
 **Architecture:**
+
 - Input: RGB images, 224×224 pixels
 - Normalization: pixel values divided by 255.0 (range 0–1)
 - Convolutional blocks: Conv2D (32–128 filters) → ReLU → MaxPooling (2×2)
@@ -26,6 +27,7 @@ The pipeline uses stratified splitting with seed 42: approximately 70% training,
 - Global Average Pooling → Dense (128 units) → Softmax (38 outputs, one per class)
 
 **Training configuration:**
+
 - Optimizer: Adam with initial learning rate 0.001
 - Loss: Sparse Categorical Cross-Entropy
 - Batch size: 32
@@ -33,6 +35,7 @@ The pipeline uses stratified splitting with seed 42: approximately 70% training,
 - Callbacks: Early Stopping (patience 3), ReduceLROnPlateau, ModelCheckpoint
 
 **Unknown-image handling:**
+
 - Confidence-based rejection: predictions rejected if softmax probability < per-class threshold
 - Entropy-based rejection: normalized Shannon entropy must be ≤ calibrated threshold
 - Calibration: thresholds computed from validation set to balance precision and recall
@@ -111,10 +114,12 @@ render.yaml                             Deployment config for Render
 ## Train and evaluate
 
 **Prerequisites:**
+
 1. Download the [PlantVillage Dataset](https://github.com/spMohanty/PlantVillage-Dataset)
 2. Extract to `dataset/PlantVillage-Dataset/`
 
 **Training pipeline:**
+
 ```bash
 cd backend
 python3 -m venv .venv
@@ -131,6 +136,7 @@ python calibrate_rejection.py --artifacts artifacts --models model --batch-size 
 ```
 
 This pipeline:
+
 1. **Discovers all classes** from directory structure (38 classes found)
 2. **Validates images** and removes corrupted files
 3. **Creates stratified split** (70/15/15) with seed 42
@@ -138,13 +144,14 @@ This pipeline:
 5. **Evaluates on test set** and generates all metrics
 6. **Calibrates rejection thresholds** using validation set
 7. **Saves all artifacts:**
-  - `model/crop_disease_model.keras` — trained weights
-  - `model/class_names.json` — complete dynamic 38-class mapping
-   - `artifacts/model_metadata.json` — architecture info
-   - `artifacts/rejection_calibration.json` — confidence thresholds
-   - `results/metrics.json` — test evaluation results
-   - `results/graphs/` — 8 visualization plots
-   - `results/classification_report.json` — per-class metrics
+
+- `model/crop_disease_model.keras` — trained weights
+- `model/class_names.json` — complete dynamic 38-class mapping
+- `artifacts/model_metadata.json` — architecture info
+- `artifacts/rejection_calibration.json` — confidence thresholds
+- `results/metrics.json` — test evaluation results
+- `results/graphs/` — 8 visualization plots
+- `results/classification_report.json` — per-class metrics
 
 ## Train on Google Colab GPU
 
@@ -202,22 +209,24 @@ files.download('/content/crop-disease-results.zip')
 
 **Tested on held-out 8,143 images (15% of full PlantVillage dataset):**
 
-| Metric | Value |
-| --- | ---: |
-| **Test Accuracy** | **95.98%** |
-| Macro Precision | 94.16% |
-| Macro Recall | 96.15% |
-| Macro F1-score | 94.87% |
-| Weighted Precision | 95.96% |
-| Weighted Recall | 95.98% |
-| Weighted F1-score | 95.91% |
+| Metric             |      Value |
+| ------------------ | ---------: |
+| **Test Accuracy**  | **95.98%** |
+| Macro Precision    |     94.16% |
+| Macro Recall       |     96.15% |
+| Macro F1-score     |     94.87% |
+| Weighted Precision |     95.96% |
+| Weighted Recall    |     95.98% |
+| Weighted F1-score  |     95.91% |
 
 **Per-class performance highlights:**
+
 - Perfect predictions (100% F1): Apple Cedar apple rust, Corn healthy, Cherry Powdery mildew, Corn Common rust
 - Lowest performance: Corn Cercospora leaf spot (86.2% F1) — inherently difficult due to visual similarity to other diseases
 - Average per-class support: ~214 images (range 41–245)
 
 **Generated visualizations** (in `results/graphs/`):
+
 1. Training accuracy curve (training vs validation)
 2. Training loss curve (training vs validation)
 3. Confusion matrix heatmap (normalized)
@@ -231,37 +240,43 @@ Full details: `backend/results/classification_report.json` and `backend/results/
 ## Run the application
 
 **Backend (Flask API):**
+
 ```bash
 cd backend
 source .venv/bin/activate
 python run.py
 ```
+
 API runs on http://127.0.0.1:5001
 
 **Frontend (React + Vite):**
+
 ```bash
 cd frontend
 npm install --legacy-peer-deps
 npm run dev
 ```
+
 Frontend runs on http://localhost:5173
 
 **API Endpoints:**
 
-| Endpoint | Method | Description |
-| --- | --- | --- |
-| `/` | GET | Service status |
-| `/predict` | POST | Upload image, get prediction |
-| `/results` | GET | Evaluation metrics and graphs |
-| `/results/graphs/<filename>` | GET | Serve PNG graph |
-| `/health` | GET | Model readiness check |
+| Endpoint                     | Method | Description                   |
+| ---------------------------- | ------ | ----------------------------- |
+| `/`                          | GET    | Service status                |
+| `/predict`                   | POST   | Upload image, get prediction  |
+| `/results`                   | GET    | Evaluation metrics and graphs |
+| `/results/graphs/<filename>` | GET    | Serve PNG graph               |
+| `/health`                    | GET    | Model readiness check         |
 
 **Example prediction request:**
+
 ```bash
 curl -F "image=@leaf.jpg" http://127.0.0.1:5001/predict
 ```
 
 **Prediction response (classified):**
+
 ```json
 {
   "success": true,
@@ -277,15 +292,16 @@ curl -F "image=@leaf.jpg" http://127.0.0.1:5001/predict
   "treatment": ["Apply fungicides...", "..."],
   "prevention": ["Use resistant varieties...", "..."],
   "top_predictions": [
-    {"disease": "Tomato — Late blight", "confidence": 98.5},
-    {"disease": "Tomato — Early blight", "confidence": 1.2},
-    {"disease": "Tomato — Septoria leaf spot", "confidence": 0.3}
+    { "disease": "Tomato — Late blight", "confidence": 98.5 },
+    { "disease": "Tomato — Early blight", "confidence": 1.2 },
+    { "disease": "Tomato — Septoria leaf spot", "confidence": 0.3 }
   ],
   "message": "Image classified using the trained PlantVillage model."
 }
 ```
 
 **Prediction response (unknown/low-confidence):**
+
 ```json
 {
   "success": true,
@@ -299,6 +315,7 @@ curl -F "image=@leaf.jpg" http://127.0.0.1:5001/predict
 ```
 
 **Frontend features:**
+
 - Image upload with preview
 - Real-time prediction from Flask API
 - Confidence score display
@@ -311,6 +328,7 @@ curl -F "image=@leaf.jpg" http://127.0.0.1:5001/predict
 ## Testing
 
 **Backend API tests:**
+
 ```bash
 # Health check
 curl http://127.0.0.1:5001/
@@ -326,6 +344,7 @@ curl http://127.0.0.1:5001/results/graphs/confusion_matrix.png -o cm.png
 ```
 
 **Frontend tests (via browser):**
+
 1. Visit http://localhost:5173/
 2. Go to "Analyze a crop leaf"
 3. Upload a crop-leaf image (JPG, PNG, or WEBP)
@@ -334,6 +353,7 @@ curl http://127.0.0.1:5001/results/graphs/confusion_matrix.png -o cm.png
 6. Check "View results dashboard" for model evaluation metrics
 
 **Full-pipeline validation:**
+
 - Dataset: 54K images from 14 crops, 38 classes ✅
 - Training: Stratified split, augmentation, callbacks ✅
 - Evaluation: Real test-set metrics (95.98% accuracy) ✅
