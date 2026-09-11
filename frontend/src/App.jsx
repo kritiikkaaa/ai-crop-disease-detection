@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Predict from "./pages/Predict";
 import Result from "./pages/Result";
+import Dashboard from "./pages/Dashboard";
 function Missing() {
   return (
     <section className="mx-auto max-w-xl px-5 py-28 text-center">
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/predict" element={<Predict />} />
         <Route path="/result" element={<Result />} />
+        <Route path="/results" element={<Dashboard />} />
         <Route path="*" element={<Missing />} />
       </Routes>
     </Layout>

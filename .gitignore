@@ -7,6 +7,10 @@ __pycache__/
 backend/models/*.keras
 backend/evaluation/*
 !backend/evaluation/.gitkeep
+backend/artifacts/*
+!backend/artifacts/.gitkeep
+backend/results/*
+!backend/results/.gitkeep
 frontend/node_modules/
 frontend/dist/
 frontend/.env.local

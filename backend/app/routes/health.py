@@ -7,7 +7,8 @@ health_bp = Blueprint("health", __name__)
 @health_bp.route("/health", methods=["GET", "POST"])
 def health():
     ready = predictor.is_ready(
-        current_app.config["MODEL_PATH"], current_app.config["LABELS_PATH"]
+        current_app.config["MODEL_PATH"], current_app.config["LABELS_PATH"],
+        current_app.config["REJECTION_CALIBRATION_PATH"],
     )
     return jsonify(
         {"status": "healthy" if ready else "model_unavailable", "model_ready": ready}

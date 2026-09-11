@@ -18,6 +18,7 @@ def predict():
             image.read(),
             current_app.config["MODEL_PATH"],
             current_app.config["LABELS_PATH"],
+            current_app.config["REJECTION_CALIBRATION_PATH"],
         )
     except FileNotFoundError:
         raise ServiceUnavailable(
@@ -25,15 +26,13 @@ def predict():
         )
     except ValueError as error:
         raise BadRequest(str(error))
-    info = DiseaseInfoService(current_app.config["DISEASE_INFO_PATH"]).get(
-        result["label"]
-    )
+    if result["status"] == "unknown":
+        return jsonify({"success": True, **result})
+    info = DiseaseInfoService(current_app.config["DISEASE_INFO_PATH"]).get(result["label"])
     return jsonify(
         {
             "success": True,
-            "disease": result["disease"],
-            "confidence": result["confidence"],
-            "top_predictions": result["top_predictions"],
+            **result,
             **info,
         }
     )

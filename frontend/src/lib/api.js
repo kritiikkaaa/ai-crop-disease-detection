@@ -8,3 +8,7 @@ export async function predict(image) {
   form.append("image", image);
   return (await api.post("/predict", form)).data;
 }
+export async function getResults() {
+  return (await api.get("/results")).data;
+}
+export const graphUrl = (filename) => `${api.defaults.baseURL}/results/graphs/${filename}`;

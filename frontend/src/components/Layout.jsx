@@ -19,6 +19,7 @@ export default function Layout({ children }) {
               Home
             </NavLink>
             <NavLink to="/about">About</NavLink>
+            <NavLink to="/results">Results</NavLink>
             <NavLink
               className="rounded-full bg-forest px-4 py-2 text-white"
               to="/predict"

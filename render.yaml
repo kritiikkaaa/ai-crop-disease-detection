@@ -3,7 +3,7 @@ services:
     name: cropvision-api
     env: python
     rootDir: backend
-    buildCommand: pip install -r requirements-production.txt && curl -fL --retry 3 -o models/model.keras https://huggingface.co/rarfileexe/Plant-Disease-Detector/resolve/main/model_4_mobilenet_finetuned.keras
+    buildCommand: pip install -r requirements-production.txt && test -f model/crop_disease_model.keras && test -f model/class_names.json && test -f artifacts/rejection_calibration.json
     startCommand: gunicorn --workers 1 --timeout 120 'run:app'
     envVars:
       - key: CORS_ORIGINS
